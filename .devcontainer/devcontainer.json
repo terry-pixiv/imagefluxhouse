@@ -1,0 +1,27 @@
+{
+  "name": "imagefluxhouse",
+  "image": "mcr.microsoft.com/vscode/devcontainers/javascript-node",
+  "remoteEnv": {
+    "PATH": "${containerWorkspaceFolder}/node_modules/.bin:${containerEnv:PATH}",
+    "PROMPT_COMMAND": "history -a",
+    "HISTFILE": "/commandhistory/.bash_history",
+    "IMAGEFLUX_API_ENDPOINT": "https://somewhere_api_endpoint/", // FIXME
+    "IMAGEFLUX_ACCESS_TOKEN": "something_access_token" // FIXME
+  },
+  "extensions": ["mubaidr.vuejs-extension-pack"],
+  "forwardPorts": [2000, 2001, 2002, 2004, 2007],
+  "mounts": [
+    "source=bashhistory,target=/commandhistory,type=volume",
+    "source=${localEnv:HOME}/.ssh,target=/root/.ssh,type=bind,consistency=cached,readonly"
+  ],
+  "postCreateCommand": "apt update && apt install -y openjdk-11-jre && rm -rf /workspace/node_modules && yarn install",
+  "settings": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.formatOnSave": true,
+    "files.exclude": {
+      "**/*.log": true
+    }
+  },
+  "workspaceMount": "source=${localWorkspaceFolder},target=/workspace,type=bind,consistency=cached",
+  "workspaceFolder": "/workspace"
+}
